@@ -8,7 +8,9 @@
 
 #import "MainViewController.h"
 #import "POPSpringAnimation.h"
+#import "POPBasicAnimation.h"
 #import "POPAnimatableProperty.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
 @property (weak) IBOutlet NSButton *windowTestButton;
@@ -85,11 +87,16 @@
     [testWindow setFrame:topOfWindowFrame display:YES];
     
     // Then start the animation loop
-    POPSpringAnimation * animation = [POPSpringAnimation animationWithPropertyNamed:kPOPWindowFrame];
+//    POPSpringAnimation * animation = [POPSpringAnimation animationWithPropertyNamed:kPOPWindowFrame];
+//    animation.springBounciness = 0;
+//    animation.springSpeed = 3;
+
+    POPBasicAnimation * animation = [POPBasicAnimation animationWithPropertyNamed:kPOPWindowFrame];
+    animation.duration = 1.0;
+    animation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0 :1 :1 :1];
+    
     animation.autoreverses = YES;
-    animation.springBounciness = 0;
-    animation.springSpeed = 3;
-    animation.repeatCount = INFINITY;
+    animation.repeatCount = NSIntegerMax;
     animation.fromValue = @(topOfWindowFrame);
     animation.toValue = @(bottomOfWindowFrame);
     
