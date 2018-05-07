@@ -21,6 +21,7 @@
 @property (strong) NSWindowController * windowMoveTestWindowController;
 @property (unsafe_unretained) IBOutlet NSTextView *moveTextView;
 @property (nonatomic, strong) NSDateFormatter * logDateFormatter;
+@property (weak) IBOutlet MainTrackingView *trackingView;
 
 @end
 
@@ -32,6 +33,10 @@
     _stopTestButton.hidden = YES;
     _logDateFormatter = [[NSDateFormatter alloc] init];
     _logDateFormatter.dateFormat = @"HH:mm:ss:SSS";
+    
+    _trackingView.mainViewController = self;
+    NSTrackingArea * trackingArea = [[NSTrackingArea alloc] initWithRect:_trackingView.bounds options:NSTrackingMouseMoved | NSTrackingActiveInKeyWindow owner:_trackingView userInfo:nil];
+    [_trackingView addTrackingArea:trackingArea];
 }
 
 - (void)viewDidAppear
@@ -135,6 +140,24 @@
 - (void)windowDidMove:(NSNotification *)notification
 {
     [self appendText:@"window did move"];
+}
+
+@end
+
+@implementation MainTrackingView
+
+- (instancetype)initWithCoder:(NSCoder *)decoder
+{
+    if (self = [super initWithCoder:decoder]) {
+        self.wantsLayer = YES;
+        self.layer.backgroundColor = [NSColor grayColor].CGColor;
+    }
+    return self;
+}
+
+- (void)mouseMoved:(NSEvent *)event
+{
+    [_mainViewController appendText:@"mouse move"];
 }
 
 @end

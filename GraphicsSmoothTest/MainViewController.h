@@ -11,3 +11,9 @@
 @interface MainViewController : NSViewController
 
 @end
+
+@interface MainTrackingView : NSView
+
+@property (nonatomic, weak) MainViewController * mainViewController;
+
+@end
