@@ -430,6 +430,7 @@
 				CODE_SIGN_ENTITLEMENTS = GraphicsSmoothTest/GraphicsSmoothTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = DMJXDB9H6Q;
 				INFOPLIST_FILE = GraphicsSmoothTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wutian.GraphicsSmoothTest;
@@ -444,6 +445,7 @@
 				CODE_SIGN_ENTITLEMENTS = GraphicsSmoothTest/GraphicsSmoothTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = DMJXDB9H6Q;
 				INFOPLIST_FILE = GraphicsSmoothTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wutian.GraphicsSmoothTest;

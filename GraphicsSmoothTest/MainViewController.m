@@ -12,13 +12,15 @@
 #import "POPAnimatableProperty.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MainViewController ()
+@interface MainViewController () <NSWindowDelegate>
 @property (weak) IBOutlet NSButton *windowTestButton;
 @property (weak) IBOutlet NSButton *stopTestButton;
 @property (weak) IBOutlet NSButton *layerTestButton;
 
 @property (strong) NSWindowController * layerTestWindowController;
 @property (strong) NSWindowController * windowMoveTestWindowController;
+@property (unsafe_unretained) IBOutlet NSTextView *moveTextView;
+@property (nonatomic, strong) NSDateFormatter * logDateFormatter;
 
 @end
 
@@ -28,10 +30,21 @@
     [super viewDidLoad];
     
     _stopTestButton.hidden = YES;
+    _logDateFormatter = [[NSDateFormatter alloc] init];
+    _logDateFormatter.dateFormat = @"HH:mm:ss:SSS";
+}
+
+- (void)viewDidAppear
+{
+    [super viewDidAppear];
+    
+    self.view.window.delegate = self;
 }
 
 - (IBAction)runWindowMoveTest:(id)sender
 {
+    [self appendText:@"did run window move test"];
+
     _windowTestButton.hidden = YES;
     _layerTestButton.hidden = YES;
     _stopTestButton.hidden = NO;
@@ -45,6 +58,8 @@
 
 - (IBAction)layerMoveTest:(id)sender
 {
+    [self appendText:@"did run layer move test"];
+
     _windowTestButton.hidden = YES;
     _layerTestButton.hidden = YES;
     _stopTestButton.hidden = NO;
@@ -56,6 +71,8 @@
 
 - (IBAction)stopTest:(id)sender
 {
+    [self appendText:@"did stop test"];
+
     _windowTestButton.hidden = NO;
     _layerTestButton.hidden = NO;
     _stopTestButton.hidden = YES;
@@ -106,6 +123,18 @@
 - (void)stopWindowMoveAnimation
 {
     [_windowMoveTestWindowController.window pop_removeAllAnimations];
+}
+
+- (void)appendText:(NSString *)text
+{
+    NSString * append = [NSString stringWithFormat:@"[%@] %@\n", [_logDateFormatter stringFromDate:[NSDate date]], text];
+    [_moveTextView.textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:append]];
+    [_moveTextView scrollRangeToVisible: NSMakeRange(_moveTextView.string.length, 0)];
+}
+
+- (void)windowDidMove:(NSNotification *)notification
+{
+    [self appendText:@"window did move"];
 }
 
 @end
